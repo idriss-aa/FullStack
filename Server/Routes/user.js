@@ -29,7 +29,7 @@ router.put('/:id', verifyTokenAndAuthorization , async (req, res) => {
 
 
 //DELETE
-router.delete('/:id', verifyTokenAndAdmin , async (req, res) => { 
+router.delete('/:id', verifyTokenAndAuthorization , async (req, res) => { 
     try {
         await User.findByIdAndDelete(req.params.id)
         res.status(200).json('User has been deleted...')
@@ -37,6 +37,33 @@ router.delete('/:id', verifyTokenAndAdmin , async (req, res) => {
         res.status(500).json(err)
     }
 })
+
+
+
+//GET USER
+router.get('/find/:id', verifyTokenAndAdmin , async (req, res) => { 
+    try {
+        const user = await User.findById(req.params.id)
+        const { password, ...data } = user._doc;
+        res.status(200).json(data)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
+
+//GET ALL USER
+router.get('/', verifyTokenAndAdmin , async (req, res) => { 
+    try {
+        const users = await User.find();
+        res.status(200).json(users)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
+
+
 
 
 module.exports = router
