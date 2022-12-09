@@ -1,53 +1,54 @@
-const Product = require('../models/Product');
+const Categorie = require('../models/Categorie');
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin} = require('./verifyToken')
 const router = require("express").Router();
 
 
-
 //CREATE
 router.post('/add', verifyToken, async (req, res) => {
-    const newProduct =  new Product(req.body);
+    const newCategorie =  new Categorie(req.body);
     try {
-        const savedProduct = await newProduct.save();
-        res.status(200).json(savedProduct);
+        const savedCategorie = await newCategorie.save();
+        res.status(200).json(savedCategorie);
     } catch (err) {
         res.status(500).json(err);
     }
-});
+})
+
 
 
 //UPDATE 
 router.put('/:id', verifyToken, async (req, res) => {
 
     try {
-        const updatedProduct = await Product.findByIdAndUpdate(req.params.id, 
+        const updatedCategorie = await Categorie.findByIdAndUpdate(req.params.id, 
         {
             $set: req.body,
         },
         { new: true }
      );
-     res.status(200).json(updatedProduct);
+     res.status(200).json(updatedCategorie);
     } catch (error) {
         res.status(500).json(err)
     }
 });
 
+
 //DELETE
 router.delete('/:id', verifyToken, async (req, res) => { 
     try {
-        await Product.findByIdAndDelete(req.params.id)
-        res.status(200).json('Product has been deleted...')
+        await Categorie.findByIdAndDelete(req.params.id)
+        res.status(200).json('Categorie has been deleted...')
     } catch (err) {
         res.status(500).json(err)
     }
-});
+})
 
 //GET CATEGORIE
 router.get('/find/:id', verifyToken , async (req, res) => { 
     try {
-        const produit = await Product.findById(req.params.id)
+        const categorie = await Categorie.findById(req.params.id)
         
-        res.status(200).json(produit)
+        res.status(200).json(categorie)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -56,17 +57,12 @@ router.get('/find/:id', verifyToken , async (req, res) => {
 //GET ALL CATEGORIES
 router.get('/', verifyToken , async (req, res) => { 
     try {
-        const produits = await Product.find();
-        res.status(200).json(produits)
+        const categories = await Categorie.find();
+        res.status(200).json(categories)
     } catch (err) {
         res.status(500).json(err)
     }
 })
 
 
-
-
 module.exports = router;
-
-
-

@@ -7,6 +7,10 @@ const app = express();
 app.use(bodyParser.json());
 const userRoutes = require('./Routes/User')
 const authRoute = require("./Routes/auth");
+const CategorieRoute = require("./Routes/categorie");
+const ProductRoute = require("./Routes/product");
+
+
 
 //connect to database
 connect();
@@ -26,7 +30,8 @@ app.use(function(req, res, next) {
 
 app.use('/api/auth', authRoute)
 app.use('/api/users', userRoutes)
-
+app.use('/api/categorie', CategorieRoute)
+app.use('/api/product', ProductRoute)
 
 
 
