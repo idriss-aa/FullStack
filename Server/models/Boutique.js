@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const StoreSchema = new mongoose.Schema({
+const BoutiqueSchema = new mongoose.Schema({
     title: { type: String, required: true , unique:true },
     isOpen: {
         type: Boolean,
@@ -17,13 +17,14 @@ const StoreSchema = new mongoose.Schema({
 
     }],
     opening_hours: [{
-            day: { type Date }, //mon - sun
-             periods: [{
-                start: { type Date },
-                end:   { type Date }
+            day: { type : Date }, //mon - sun
+            periods: [{
+                start: { type : Date },
+                end:   { type : Date }
             }]
     }]
+},
     { timestamps: true }
-})
+)
 
-module.exports = mongoose.model('Store',StoreSchema)
+module.exports = mongoose.model('Boutique',BoutiqueSchema)
