@@ -11,8 +11,6 @@ const CategorieRoute = require("./Routes/categorie");
 const ProductRoute = require("./Routes/product");
 const BoutiqueRoute = require("./Routes/boutique");
 
-const time = new Date("1995-12-17T03:24:00");
-console.log(time)
 //connect to database
 connect();
 
