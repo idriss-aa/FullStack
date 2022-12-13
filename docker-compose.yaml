@@ -1,9 +1,21 @@
 version: "3"
 services:
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - "4200:80"
   api:
     build:
       dockerfile: Dockerfile.dev
       context: "./Server"
+    ports:
+      - "8080:8080"
     volumes:
       - /app/node_modules
       - ./Server:/app
@@ -13,15 +25,15 @@ services:
       - domain=localhost
       - PASS_SEC=KhassekTkouneAntonix
       - JWT_SEC=KhassekTkouneAntonix
-
-
-    
+      
   client:
     stdin_open: true
     environment:
       - CHOKIDAR_USEPOLLING=true
     build:
       dockerfile: Dockerfile.dev
-      context: ./
+      context: ./client
     volumes:
       - /app/node_modules
+      - ./client:/app
+

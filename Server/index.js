@@ -32,6 +32,6 @@ app.use('/api/product', ProductRoute)
 app.use('/api/store', BoutiqueRoute)
 
 
-app.listen(process.env.PORT, process.env.domain ,() =>{
+app.listen(process.env.PORT, '0.0.0.0' ,() =>{
     console.log(`Server is Running on ${process.env.PORT}`);
 })

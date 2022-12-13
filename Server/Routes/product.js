@@ -53,7 +53,7 @@ router.get('/find/:id', verifyToken , async (req, res) => {
     }
 })
 
-//GET ALL CATEGORIES
+//GET ALL Products
 router.get('/', verifyToken , async (req, res) => { 
     try {
         const produits = await Product.find();
