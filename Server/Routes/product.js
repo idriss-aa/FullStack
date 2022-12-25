@@ -64,6 +64,26 @@ router.get('/', verifyToken , async (req, res) => {
 })
 
 
+//SORT PRODUCTS 
+router.get('/sort', verifyToken , async (req, res) => { 
+    try {
+
+        const by = req.query.by
+        console.log(typeof(by))
+        const SortBy = { by : -1 };
+        const produits = await Product.find().sort({by : 1});
+       /* if(by){
+            console.log(by)
+            produits = await Product.find().sort({"title":-1});
+            console.log(produits)
+        }*/
+        res.status(200).json(produits)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
+
 
 
 module.exports = router;

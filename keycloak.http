@@ -1,0 +1,12 @@
+GET http://localhost:8081/auth/realms/fullStack-realm/.well-known/openid-configuration
+
+##
+POST http://localhost:8081/auth/realms/fullStack-realm/protocol/openid-configuration
+Content-Type: application/x-www-form-urlencoded
+
+client_id=fullstack-web
+&client_secret=a9f8b9bc-5fec-4376-beb0-5af5de703c0d
+&grant_type=password
+&username=user@gmail.com
+&password=admin
+&scope=openid

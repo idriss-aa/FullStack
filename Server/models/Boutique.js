@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 
 
 const BoutiqueSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
     title: { type: String, required: true , unique:true },
     isOpen: {
         type: Boolean,
         default:false,
-    },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
     },
     products : [{
             type: mongoose.Schema.Types.ObjectId,
@@ -22,7 +22,12 @@ const BoutiqueSchema = new mongoose.Schema({
                 start: { type : Date },
                 end:   { type : Date }
             }]
-    }]
+    }],
+    categories : [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Categorie'
+    }],
+    
 },
     { timestamps: true }
 )
