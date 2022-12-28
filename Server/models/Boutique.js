@@ -23,11 +23,6 @@ const BoutiqueSchema = new mongoose.Schema({
                 end:   { type : Date }
             }]
     }],
-    categories : [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Categorie'
-    }],
-    
 },
     { timestamps: true }
 )
