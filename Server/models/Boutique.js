@@ -17,7 +17,7 @@ const BoutiqueSchema = new mongoose.Schema({
 
     }],
     opening_hours: [{
-            day: { type : Date }, //mon - sun
+            day: { type: String }, //mon - sun
             periods: [{
                 start: { type : Date },
                 end:   { type : Date }
