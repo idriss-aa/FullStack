@@ -1,10 +1,10 @@
 const User = require('../models/User');
-const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin} = require('./verifyToken')
+const {verifyTokenAndisAdmin, verifyToken, verifyTokenAndisAdminOrSameUser} = require('./verifyToken')
 const router = require("express").Router();
 
 
 //UPDATE
-router.put('/:id', verifyTokenAndAuthorization , async (req, res) => {
+router.put('/:id' , verifyTokenAndisAdminOrSameUser ,async (req, res) => {
 
     if(req.body.password){
         req.body.password = CryptoJS.AES.encrypt(
@@ -20,50 +20,112 @@ router.put('/:id', verifyTokenAndAuthorization , async (req, res) => {
         },
         { new: true }
      );
-     res.status(200).json(updatedUser);
+
+     if(updatedUser == null){
+        return res.status(403).json('Erreur : Utilisateur non trouvée')
+    }
+        return res.status(200).json(updatedUser);
     } catch (error) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 });
 
 
 
 //DELETE
-router.delete('/:id', verifyTokenAndAuthorization , async (req, res) => { 
+router.delete('/:id' , verifyTokenAndisAdmin ,async (req, res) => { 
     try {
         await User.findByIdAndDelete(req.params.id)
-        res.status(200).json('User has been deleted...')
+        return res.status(200).json('User has been deleted...')
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 })
 
 
 
 //GET USER
-router.get('/find/:id', verifyTokenAndAdmin , async (req, res) => { 
+router.get('/find/:id' , verifyTokenAndisAdmin ,async (req, res) => { 
     try {
         const user = await User.findById(req.params.id)
         const { password, ...data } = user._doc;
-        res.status(200).json(data)
+        return res.status(200).json(data)
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 })
 
 
 //GET ALL USER
-router.get('/', verifyTokenAndAdmin , async (req, res) => { 
+router.get('/' ,verifyTokenAndisAdmin ,async (req, res) => { 
     try {
         const users = await User.find();
-        res.status(200).json(users)
+        return res.status(200).json(users)
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
+    }
+})
+
+//MAKE USER ADMIN
+router.put('/admin/:id' , verifyTokenAndisAdmin,async (req, res) => { 
+    try {
+
+     const updatedUserAdmin = await User.update({_id: req.params.id},{$set:{isAdmin: true}})
+
+     if(updatedUserAdmin == null){
+        return res.status(403).json('Erreur : Utilisateur non trouvée')
+    }
+        return res.status(200).json(await User.findById(req.params.id));
+    } catch (error) {
+        return res.status(500).json(error)
     }
 })
 
 
+//REMOVE USER ADMIN
+router.put('/admin/remove/:id',verifyTokenAndisAdmin ,async (req, res) => { 
+    try {
 
+     const updatedUserAdmin = await User.update({_id: req.params.id},{$set:{isAdmin: false}})
+
+     if(updatedUserAdmin == null){
+        return res.status(403).json('Erreur : Utilisateur non trouvée')
+    }
+        return res.status(200).json(await User.findById(req.params.id));
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+})
+
+//MAKE USER MANAGER
+router.put('/manager/:id',verifyTokenAndisAdmin ,async (req, res) => { 
+    try {
+
+     const updatedUserAdmin = await User.update({_id: req.params.id},{$set:{isVendorDeliveryMan: true}})
+
+     if(updatedUserAdmin == null){
+        return res.status(403).json('Erreur : Utilisateur non trouvée')
+    }
+        return res.status(200).json(await User.findById(req.params.id));
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+})
+
+//REMOVE USER MANAGER
+router.put('/manager/remove/:id',verifyTokenAndisAdmin ,async (req, res) => { 
+    try {
+
+     const updatedUserAdmin = await User.update({_id: req.params.id},{$set:{isVendorDeliveryMan: false}})
+
+     if(updatedUserAdmin == null){
+        return res.status(403).json('Erreur : Utilisateur non trouvée')
+    }
+        return res.status(200).json(await User.findById(req.params.id));
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+})
 
 
 module.exports = router

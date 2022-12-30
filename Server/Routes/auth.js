@@ -45,6 +45,7 @@ router.post('/login', async (req, res) =>{
        const accessToken = jwt.sign({
         id : user._id,
         isAdmin: user.isAdmin,
+        isVendorDeliveryMan:user.isVendorDeliveryMan
        },
         process.env.JWT_SEC,
         {expiresIn: "3d"}

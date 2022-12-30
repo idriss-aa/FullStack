@@ -1,21 +1,21 @@
 const Boutique = require('../models/Boutique');
-const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin} = require('./verifyToken')
+const { verifyTokenAndAdminOrManager, verifyTokenAndisAdmin} = require('./verifyToken')
 const router = require("express").Router();
 
 
-//CREATE
-router.post('/add', verifyToken, async (req, res) => {
+//CREATE SHOP
+router.post('/add', verifyTokenAndAdminOrManager, async (req, res) => {
     const newBoutique =  new Boutique(req.body);
     try {
         const savedBoutique = await newBoutique.save();
-        res.status(200).json(savedBoutique);
+        return res.status(200).json(savedBoutique);
     } catch (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
     }
 });
 
-//UPDATE 
-router.put('/:id', verifyToken, async (req, res) => {
+//UPDATE SHOP
+router.put('/:id', verifyTokenAndAdminOrManager, async (req, res) => {
 
     try {
         const updatedBoutique = await Boutique.findByIdAndUpdate(req.params.id, 
@@ -24,43 +24,53 @@ router.put('/:id', verifyToken, async (req, res) => {
         },
         { new: true }
      );
-     res.status(200).json(updatedBoutique);
+     return res.status(200).json(updatedBoutique);
     } catch (error) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 });
 
 
-//DELETE
-router.delete('/:id', verifyToken, async (req, res) => { 
+//DELETE SHOP
+router.delete('/:id', verifyTokenAndAdminOrManager, async (req, res) => { 
     try {
         await Boutique.findByIdAndDelete(req.params.id)
-        res.status(200).json('Store has been deleted...')
+        return res.status(200).json('Store has been deleted...')
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 });
 
-//GET CATEGORIE
-router.get('/find/:id', verifyToken , async (req, res) => { 
+//GET SHOPS
+router.get('/find/:id', async (req, res) => { 
     try {
         const boutique = await Boutique.findById(req.params.id)
-        
-        res.status(200).json(boutique)
+        if(boutique == null){
+            return res.status(403).json('Erreur : Catégorie non trouvée')
+        }
+        return res.status(200).json(boutique)
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 });
 
-//GET ALL CATEGORIES
-router.get('/', verifyToken , async (req, res) => { 
+//GET ALL SHOPS
+router.get('/', async (req, res) => { 
     try {
-        const boutiques = await Boutique.find();
-        res.status(200).json(boutiques)
+        if(){
+            const page = parseInt(req.query.page) - 1 || 0;
+            const limit = parseInt(req.query.limit) || 9999999999999;
+        }
+        console.log("aalo")
+        console.log(page, limit)
+        const boutiques = await Boutique.find().skip(page * limit).limit(limit);
+        return res.status(200).json(boutiques)
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 });
+
+
 
 
 

@@ -1,23 +1,23 @@
 const Product = require('../models/Product');
-const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin} = require('./verifyToken')
+const { verifyTokenAndAdminOrManager, verifyTokenAndisAdmin} = require('./verifyToken')
 const router = require("express").Router();
 
 
 
 //CREATE
-router.post('/add', verifyToken, async (req, res) => {
+router.post('/add', verifyTokenAndAdminOrManager, async (req, res) => {
     const newProduct =  new Product(req.body);
     try {
         const savedProduct = await newProduct.save();
-        res.status(200).json(savedProduct);
+        return res.status(200).json(savedProduct);
     } catch (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
     }
 });
 
 
 //UPDATE 
-router.put('/:id', verifyToken, async (req, res) => {
+router.put('/:id', verifyTokenAndAdminOrManager, async (req, res) => {
 
     try {
         const updatedProduct = await Product.findByIdAndUpdate(req.params.id, 
@@ -26,48 +26,49 @@ router.put('/:id', verifyToken, async (req, res) => {
         },
         { new: true }
      );
-     res.status(200).json(updatedProduct);
+     return res.status(200).json(updatedProduct);
     } catch (error) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 });
 
 //DELETE
-router.delete('/:id', verifyToken, async (req, res) => { 
+router.delete('/:id', verifyTokenAndAdminOrManager, async (req, res) => { 
     try {
         await Product.findByIdAndDelete(req.params.id)
-        res.status(200).json('Product has been deleted...')
+        return res.status(200).json('Product has been deleted...')
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 });
 
-//GET CATEGORIE
-router.get('/find/:id', verifyToken , async (req, res) => { 
+//GET PRODUCT
+router.get('/find/:id' , async (req, res) => { 
     try {
         const produit = await Product.findById(req.params.id)
-        
-        res.status(200).json(produit)
+        if(produit == null){
+            return res.status(403).json('Erreur : Catégorie non trouvée')
+        }
+        return res.status(200).json(produit)
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 })
 
 //GET ALL Products
-router.get('/', verifyToken , async (req, res) => { 
+router.get('/' , async (req, res) => { 
     try {
         const produits = await Product.find();
-        res.status(200).json(produits)
+        return res.status(200).json(produits)
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 })
 
 
 //SORT PRODUCTS 
-router.get('/sort', verifyToken , async (req, res) => { 
+router.get('/sort' , async (req, res) => { 
     try {
-
         const by = req.query.by
         console.log(typeof(by))
         const SortBy = { by : -1 };
@@ -77,9 +78,9 @@ router.get('/sort', verifyToken , async (req, res) => {
             produits = await Product.find().sort({"title":-1});
             console.log(produits)
         }*/
-        res.status(200).json(produits)
+        return res.status(200).json(produits)
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 })
 

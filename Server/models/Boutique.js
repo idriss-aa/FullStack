@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 
 
 const BoutiqueSchema = new mongoose.Schema({
-    userId: {
+    CreatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        required : true,
+        immutable : true
     },
     title: { type: String, required: true , unique:true },
     isOpen: {
@@ -23,6 +25,7 @@ const BoutiqueSchema = new mongoose.Schema({
                 end:   { type : Date }
             }]
     }],
+    CreationDate: {type: Date, default: null }
 },
     { timestamps: true }
 )
