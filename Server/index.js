@@ -32,6 +32,13 @@ const keycloak = new Keycloak({
     store: memoryStore,
 });
 */
+
+app.use(cors({
+	origin:'*'
+}))
+
+
+
 app.use(logger("dev"));
 app.use(function(req, res, next) {
        

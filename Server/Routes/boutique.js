@@ -41,7 +41,7 @@ router.delete('/:id', verifyTokenAndAdminOrManager, async (req, res) => {
     }
 });
 
-//GET SHOPS
+//GET SHOP by ID
 router.get('/find/:id', async (req, res) => { 
     try {
         const boutique = await Boutique.findById(req.params.id)
@@ -61,9 +61,9 @@ router.get('/', async (req, res) => {
             const page = parseInt(req.query.page) - 1 || 0;
             const limit = parseInt(req.query.limit) || 9999999999999;
         }
-        console.log("aalo")
-        console.log(page, limit)
-        const boutiques = await Boutique.find().skip(page * limit).limit(limit);
+       // console.log("aalo")
+       //console.log(page, limit)
+        const boutiques = await Boutique.find();
         return res.status(200).json(boutiques)
     } catch (err) {
         return res.status(500).json(err)
