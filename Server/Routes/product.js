@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const Boutique = require('../models/Boutique');
 const { verifyTokenAndAdminOrManager, verifyTokenAndisAdmin} = require('./verifyToken')
 const router = require("express").Router();
 
@@ -64,6 +65,26 @@ router.get('/' , async (req, res) => {
         return res.status(500).json(err)
     }
 })
+
+
+
+//GET ALL Products By Store
+router.get('/ByStore/:id' , async (req, res) => { 
+    try {
+        const produits = await Product.find({StoreId : req.params.id});
+
+        if(produits == null){
+            return res.status(404).json('Data Not Found');  
+        }
+
+        return res.status(200).json(produits)
+    } catch (err) {
+        return res.status(500).json(err)
+    }
+})
+
+
+
 
 
 //SORT PRODUCTS 

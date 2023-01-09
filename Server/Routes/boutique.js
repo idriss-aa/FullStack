@@ -57,7 +57,7 @@ router.get('/find/:id', async (req, res) => {
 //GET ALL SHOPS
 router.get('/', async (req, res) => { 
     try {
-        if(){
+        if(true){
             const page = parseInt(req.query.page) - 1 || 0;
             const limit = parseInt(req.query.limit) || 9999999999999;
         }
