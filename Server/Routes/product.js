@@ -73,10 +73,9 @@ router.get('/ByStore/:id' , async (req, res) => {
     try {
         const produits = await Product.find({StoreId : req.params.id});
 
-        if(produits == null){
+        if(produits.length === 0){
             return res.status(404).json('Data Not Found');  
         }
-
         return res.status(200).json(produits)
     } catch (err) {
         return res.status(500).json(err)
