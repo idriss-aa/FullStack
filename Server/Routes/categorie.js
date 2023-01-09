@@ -67,4 +67,20 @@ router.get('/' , async (req, res) => {
 })
 
 
+//GET ALL CATEGORIES By Store
+router.get('/ByStore/:id', async (req, res) => { 
+    try {
+        const categories = await Categorie.find({StoreId : req.params.id});
+
+
+        if(categories == null){
+            return res.status(404).json('Data Not Found');  
+        }
+        return res.status(200).json(categories)
+    } catch (err) {
+        return res.status(500).json(err)
+    }
+})
+
+
 module.exports = router;
