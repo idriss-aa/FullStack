@@ -6,9 +6,18 @@ const router = require("express").Router();
 
 
 //CREATE
-router.post('/add', verifyTokenAndAdminOrManager, async (req, res) => {
-    const newProduct =  new Product(req.body);
+router.post('/add', verifyTokenAndAdminOrManager, async (req, res) => { 
     try {
+        const Newstore = await Boutique.findOneAndUpdate( 
+                            { _id: req.body.StoreId }, 
+                            { $inc : {'Nb_products' : 1}},
+                            );
+
+        if(Newstore == null){
+            return res.status(404).json("Store Not Found");
+        }
+        
+        const newProduct =  new Product(req.body);
         const savedProduct = await newProduct.save();
         return res.status(200).json(savedProduct);
     } catch (err) {
@@ -36,6 +45,11 @@ router.put('/:id', verifyTokenAndAdminOrManager, async (req, res) => {
 //DELETE
 router.delete('/:id', verifyTokenAndAdminOrManager, async (req, res) => { 
     try {
+
+        
+
+
+
         await Product.findByIdAndDelete(req.params.id)
         return res.status(200).json('Product has been deleted...')
     } catch (err) {
@@ -59,20 +73,18 @@ router.get('/find/:id' , async (req, res) => {
 //GET ALL Products
 router.get('/' , async (req, res) => { 
     try {
-        const produits = await Product.find();
+        const produits = await Product.find().populate('categories')
         return res.status(200).json(produits)
     } catch (err) {
         return res.status(500).json(err)
     }
 })
 
-
-
 //GET ALL Products By Store
 router.get('/ByStore/:id' , async (req, res) => { 
     try {
         const produits = await Product.find({StoreId : req.params.id});
-
+        
         if(produits.length === 0){
             return res.status(404).json('Data Not Found');  
         }
@@ -81,30 +93,6 @@ router.get('/ByStore/:id' , async (req, res) => {
         return res.status(500).json(err)
     }
 })
-
-
-
-
-
-//SORT PRODUCTS 
-router.get('/sort' , async (req, res) => { 
-    try {
-        const by = req.query.by
-        console.log(typeof(by))
-        const SortBy = { by : -1 };
-        const produits = await Product.find().sort({by : 1});
-       /* if(by){
-            console.log(by)
-            produits = await Product.find().sort({"title":-1});
-            console.log(produits)
-        }*/
-        return res.status(200).json(produits)
-    } catch (err) {
-        return res.status(500).json(err)
-    }
-})
-
-
 
 
 module.exports = router;

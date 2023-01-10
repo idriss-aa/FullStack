@@ -57,18 +57,17 @@ router.get('/find/:id', async (req, res) => {
 
 //GET ALL SHOPS
 router.get('/', async (req, res) => { 
-    try {
-        
-        let page = -1;
-        let limit = 100;
-
-        if(req.query.page && req.query.limit){
-            const page = parseInt(req.query.page) - 1 || 0;
-            const limit = parseInt(req.query.limit) || 9999999999999;
-        }
-        const boutiques = await Boutique.find().skip(page * limit).limit(limit).sort({ updatedAt: -1 });;
+    try { 
+        let perPage = 2;
+        let total = await Boutique.find().count();
+        let pages = Math.ceil(total / perPage);
+        let pageNumber = (req.query.page == null) ? 1 : req.query.page;
+        let startFrom = (pageNumber - 1) * perPage;
+        let sort = (req.query.sort == null) ? "createdAt" : req.query.sort;
+        const obj = {}
+        obj[sort] = 1;
+        const boutiques = await Boutique.find().skip(startFrom).limit(perPage).sort(obj);
         return res.status(200).json(boutiques)
-
     } catch (err) {
         return res.status(500).json(err)
     }

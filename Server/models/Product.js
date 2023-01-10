@@ -13,6 +13,7 @@ const ProductSchema = new mongoose.Schema({
         ref: 'Categorie'
     }],
     price: { type: Number, required: true },
+    CreationDate: {type: Date, default: () => Date.now() + 1*60*60*1000  },
     },
     { timestamps: true }
 )
