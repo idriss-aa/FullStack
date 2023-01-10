@@ -14,7 +14,6 @@ const verifyToken = (req, res, next) => {
     }
 }
 
-
 const verifyTokenAndisAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
 

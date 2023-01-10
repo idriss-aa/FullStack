@@ -1,12 +1,13 @@
 const Boutique = require('../models/Boutique');
 const { verifyTokenAndAdminOrManager, verifyTokenAndisAdmin} = require('./verifyToken')
 const router = require("express").Router();
+const mongoose = require('mongoose');
 
 
 //CREATE SHOP
 router.post('/add', verifyTokenAndAdminOrManager, async (req, res) => {
-    const newBoutique =  new Boutique(req.body);
-    try {
+    try {    
+        const newBoutique =  new Boutique(req.body);
         const savedBoutique = await newBoutique.save();
         return res.status(200).json(savedBoutique);
     } catch (err) {
@@ -15,7 +16,7 @@ router.post('/add', verifyTokenAndAdminOrManager, async (req, res) => {
 });
 
 //UPDATE SHOP
-router.put('/:id', verifyTokenAndAdminOrManager, async (req, res) => {
+router.put('/edit/:id', verifyTokenAndAdminOrManager, async (req, res) => {
 
     try {
         const updatedBoutique = await Boutique.findByIdAndUpdate(req.params.id, 
@@ -57,14 +58,17 @@ router.get('/find/:id', async (req, res) => {
 //GET ALL SHOPS
 router.get('/', async (req, res) => { 
     try {
-        if(true){
+        
+        let page = -1;
+        let limit = 100;
+
+        if(req.query.page && req.query.limit){
             const page = parseInt(req.query.page) - 1 || 0;
             const limit = parseInt(req.query.limit) || 9999999999999;
         }
-       // console.log("aalo")
-       //console.log(page, limit)
-        const boutiques = await Boutique.find();
+        const boutiques = await Boutique.find().skip(page * limit).limit(limit).sort({ updatedAt: -1 });;
         return res.status(200).json(boutiques)
+
     } catch (err) {
         return res.status(500).json(err)
     }

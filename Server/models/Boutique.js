@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 
 const BoutiqueSchema = new mongoose.Schema({
+    
     CreatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -25,9 +26,9 @@ const BoutiqueSchema = new mongoose.Schema({
                 end:   { type : Date }
             }]
     }],
-    CreationDate: {type: Date, default: null }
+    CreationDate: {type: Date, default: () => Date.now() + 1*60*60*1000  }
 },
     { timestamps: true }
 )
 
-module.exports = mongoose.model('Boutique',BoutiqueSchema)
+module.exports = mongoose.model('Boutique', BoutiqueSchema)
