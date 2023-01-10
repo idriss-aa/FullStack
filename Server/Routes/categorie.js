@@ -5,8 +5,14 @@ const router = require("express").Router();
 
 //CREATE
 router.post('/add', verifyTokenAndisAdmin, async (req, res) => {
-    const newCategorie =  new Categorie(req.body);
+    
     try {
+        const Newstore = await Boutique.findOneAndUpdate( 
+            { _id: req.body.StoreId }, 
+            { $inc : {'Nb_products' : 1}},
+            );
+
+        const newCategorie =  new Categorie(req.body);
         const savedCategorie = await newCategorie.save();
         return res.status(200).json(savedCategorie);
     } catch (err) {

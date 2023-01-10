@@ -45,11 +45,14 @@ router.put('/:id', verifyTokenAndAdminOrManager, async (req, res) => {
 //DELETE
 router.delete('/:id', verifyTokenAndAdminOrManager, async (req, res) => { 
     try {
-
-        
-
-
-
+        const produit = await Product.findById(req.params.id)
+        if(produit == null){
+            return res.status(404).json('Product Not Found')
+        }
+        const Newstore = await Boutique.findOneAndUpdate( 
+                 { _id: produit.StoreId._id }, 
+                 { $inc : {'Nb_products' : -1}},
+             );
         await Product.findByIdAndDelete(req.params.id)
         return res.status(200).json('Product has been deleted...')
     } catch (err) {
