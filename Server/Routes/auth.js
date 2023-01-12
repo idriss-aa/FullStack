@@ -2,7 +2,7 @@ const router = require('express').Router();
 const User = require('../models/User');
 const CryptoJS = require('crypto-js');
 const jwt = require('jsonwebtoken')
-const { verifyToken } = require('./verifyToken')
+const { verifyToken, verifyUserToken } = require('./verifyToken')
 
 //REGISTER
 router.post('/register', async (req, res) => {
@@ -60,7 +60,7 @@ router.post('/login', async (req, res) =>{
 })
 
 //Verify Token
-router.get('/validate', verifyToken ,async (req, res) => {});
+router.get('/validate', verifyUserToken ,async (req, res) => {});
 
 
 module.exports = router;
