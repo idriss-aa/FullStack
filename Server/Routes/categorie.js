@@ -1,4 +1,5 @@
 const Categorie = require('../models/Categorie');
+const Boutique = require('../models/Boutique');
 const { verifyTokenAndisAdmin} = require('./verifyToken')
 const router = require("express").Router();
 
@@ -7,13 +8,17 @@ const router = require("express").Router();
 router.post('/add', verifyTokenAndisAdmin, async (req, res) => {
     
     try {
-        const Newstore = await Boutique.findOneAndUpdate( 
+        
+        const store = await Boutique.findOneAndUpdate( 
             { _id: req.body.StoreId }, 
-            { $inc : {'Nb_products' : 1}},
+            { $inc : {'Nb_Categories' : 1}},
             );
 
-        const newCategorie =  new Categorie(req.body);
-        const savedCategorie = await newCategorie.save();
+            if(store == null){
+                return res.status(404).json('Store Not Found')
+            }    
+            const newCategorie =  new Categorie(req.body);
+            const savedCategorie = await newCategorie.save();
         return res.status(200).json(savedCategorie);
     } catch (err) {
         return res.status(500).json(err);

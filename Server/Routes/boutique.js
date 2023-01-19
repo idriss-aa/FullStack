@@ -7,6 +7,11 @@ const mongoose = require('mongoose');
 //CREATE SHOP
 router.post('/add', verifyTokenAndAdminOrManager, async (req, res) => {
     try {    
+        
+        if(req.body.opening_hours.length != 7){
+            return res.status(500).json('Les dates d\'ouvertures doivent contenir tous les jours de la semaine'); 
+        }
+        
         const newBoutique =  new Boutique(req.body);
         const savedBoutique = await newBoutique.save();
         return res.status(200).json(savedBoutique);
@@ -59,32 +64,52 @@ router.get('/find/:id', async (req, res) => {
 router.get('/', async (req, res) => { 
    
     try { 
-        // let perPage = 2;
-        // let total = await Boutique.find().count();
-        // let pages = Math.ceil(total / perPage);
-        // console.log(pages)
-        // let pageNumber = (req.query.page == null) ? 1 : req.query.page;
-        // let startFrom = (pageNumber - 1) * perPage;
+        let match = {};
+        if (req.query.isOpen){
+            match.isOpen = req.query.isOpen ;
+        } 
+        if (req.query.title){
+            match.title = req.query.title ;
+        } 
+        // if(req.query.dateFrom){
+        //     if(!match["CreationDate"]) match["CreationDate"] = {};
+        //     let dateFrom = moment(new Date(req.query.dateFrom)).toDate();
+        //     options["CreationDate"]['$gte'] = dateFrom;
+        // }
+    
+        // if(req.query.dateTo){
+        //    if(!match["CreationDate"]) match["CreationDate"] = {};
+        //     let dateTo = moment(new Date(req.query.dateTo)).toDate();
+        //     match["CreationDate"]['$lte'] = dateTo;
+        // }
+        console.log(match)
+
+        // if (req.query.before || req.query.after) {
+        //     console.log(req.query.before)
+        //     console.log(req.query.after)
+
+        //      let dateBefore = req.query.before ? moment(req.query.before) : null;
+        //      let dateAfter= req.query.after ? moment(req.query.after) : null;
+        //      match.date = {$gte: new Date(dateBefore), $lt: new Date(dateAfter)};
+        // }
+
+        console.log(match)
+
          let sort = (req.query.sort == null) ? "createdAt" : req.query.sort;
          const obj = {}
          obj[sort] = 1;
-
         const currentPage = req.query.currentPage;
         const pageSize = req.query.pageSize;
-
         const skip = pageSize * (currentPage - 1);
         const limit = pageSize;
 
 
-        const boutiques = await Boutique.find().skip(skip).limit(limit).sort(obj);
+        const boutiques = await Boutique.find(match).skip(skip).limit(limit).sort(obj);
         return res.status(200).json(boutiques)
     } catch (err) {
         return res.status(500).json(err)
     }
 });
-
-
-
 
 
 module.exports = router;
