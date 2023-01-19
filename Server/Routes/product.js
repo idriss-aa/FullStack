@@ -86,12 +86,12 @@ router.get('/' , async (req, res) => {
 //GET ALL Products By Store
 router.get('/ByStore/:id' , async (req, res) => { 
     try {
-        const produits = await Product.find({StoreId : req.params.id});
-        
-        if(produits.length === 0){
+        const produits = await Product.find({StoreId : req.params.id}).populate('categories');
+    
+        if(produits == null){
             return res.status(404).json('Data Not Found');  
         }
-        return res.status(200).json(produits)
+        return res.status(200).json(produits);
     } catch (err) {
         return res.status(500).json(err)
     }
