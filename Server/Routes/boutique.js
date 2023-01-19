@@ -2,6 +2,8 @@ const Boutique = require('../models/Boutique');
 const { verifyTokenAndAdminOrManager, verifyTokenAndisAdmin} = require('./verifyToken')
 const router = require("express").Router();
 const mongoose = require('mongoose');
+const moment = require('moment');
+
 
 
 //CREATE SHOP
@@ -71,29 +73,17 @@ router.get('/', async (req, res) => {
         if (req.query.title){
             match.title = req.query.title ;
         } 
-        // if(req.query.dateFrom){
-        //     if(!match["CreationDate"]) match["CreationDate"] = {};
-        //     let dateFrom = moment(new Date(req.query.dateFrom)).toDate();
-        //     options["CreationDate"]['$gte'] = dateFrom;
-        // }
-    
-        // if(req.query.dateTo){
-        //    if(!match["CreationDate"]) match["CreationDate"] = {};
-        //     let dateTo = moment(new Date(req.query.dateTo)).toDate();
-        //     match["CreationDate"]['$lte'] = dateTo;
-        // }
-        console.log(match)
+        if(req.query.dateFrom){
+            if(!match["CreationDate"]) match["CreationDate"] = {};
+            let dateFrom = moment(new Date(req.query.dateFrom)).toDate();
+            match["CreationDate"]['$gte'] = dateFrom;
+        }
 
-        // if (req.query.before || req.query.after) {
-        //     console.log(req.query.before)
-        //     console.log(req.query.after)
-
-        //      let dateBefore = req.query.before ? moment(req.query.before) : null;
-        //      let dateAfter= req.query.after ? moment(req.query.after) : null;
-        //      match.date = {$gte: new Date(dateBefore), $lt: new Date(dateAfter)};
-        // }
-
-        console.log(match)
+        if(req.query.dateTo){
+           if(!match["CreationDate"]) match["CreationDate"] = {};
+            let dateTo = moment(new Date(req.query.dateTo)).toDate();
+            match["CreationDate"]['$lte'] = dateTo;
+        }
 
          let sort = (req.query.sort == null) ? "createdAt" : req.query.sort;
          const obj = {}
@@ -102,8 +92,6 @@ router.get('/', async (req, res) => {
         const pageSize = req.query.pageSize;
         const skip = pageSize * (currentPage - 1);
         const limit = pageSize;
-
-
         const boutiques = await Boutique.find(match).skip(skip).limit(limit).sort(obj);
         return res.status(200).json(boutiques)
     } catch (err) {
