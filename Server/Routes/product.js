@@ -35,7 +35,7 @@ router.put('/:id', verifyTokenAndAdminOrManager, async (req, res) => {
             $set: req.body,
         },
         { new: true }
-     );
+     ).populate('categories');
      return res.status(200).json(updatedProduct);
     } catch (error) {
         return res.status(500).json(err)
@@ -63,9 +63,9 @@ router.delete('/:id', verifyTokenAndAdminOrManager, async (req, res) => {
 //GET PRODUCT
 router.get('/find/:id' , async (req, res) => { 
     try {
-        const produit = await Product.findById(req.params.id)
+        const produit = await Product.findById(req.params.id).populate('categories')
         if(produit == null){
-            return res.status(403).json('Erreur : Catégorie non trouvée')
+            return res.status(403).json('Erreur : Produit non trouvé')
         }
         return res.status(200).json(produit)
     } catch (err) {
@@ -96,7 +96,6 @@ router.get('/ByStore/:id' , async (req, res) => {
         return res.status(500).json(err)
     }
 })
-
 
 module.exports = router;
 
