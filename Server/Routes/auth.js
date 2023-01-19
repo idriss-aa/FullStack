@@ -6,6 +6,14 @@ const { verifyToken, verifyUserToken } = require('./verifyToken')
 
 //REGISTER
 router.post('/register', async (req, res) => {
+
+    try {
+    const SameUsername = await User.findOne({ username : req.body.username });
+    if(SameUsername) return res.status(401).json('Il existe déja un utilisateur avec ce pseudo');
+    
+    const Sameemail = await User.findOne({ email : req.body.email });
+    if(Sameemail) return res.status(401).json('Il existe déja un utilisateur avec cet email');
+
     const newUser = new User({
         username : req.body.username,
         email : req.body.email,
@@ -15,11 +23,10 @@ router.post('/register', async (req, res) => {
         ).toString(),
     });
 
-    try {
         const savedUser = await newUser.save();
-        res.status(201).json(savedUser)
+        return res.status(201).json(savedUser)
     } catch (err) {
-        res.status(500).json(err)
+        return res.status(500).json(err)
     }
 });
 
@@ -53,9 +60,9 @@ router.post('/login', async (req, res) =>{
        );
        
         const { password, ...data } = user._doc;
-        res.status(200).json({...data, accessToken});
+        return res.status(200).json({...data, accessToken});
     } catch (err) {
-        res.status(500).json(err);
+        return res.status(500).json(err);
     }
 })
 
