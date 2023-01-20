@@ -86,8 +86,15 @@ router.get('/' , async (req, res) => {
 //GET ALL Products By Store
 router.get('/ByStore/:id' , async (req, res) => { 
     try {
-        const produits = await Product.find({StoreId : req.params.id}).populate('categories');
-    
+
+        let match = {};
+        match.StoreId = req.params.id;
+
+        if (req.query.categorie){
+            match.isOpen = req.query.categorie;
+        } 
+
+        const produits = await Product.find(match).populate('categories');    
         if(produits == null){
             return res.status(404).json('Data Not Found');  
         }

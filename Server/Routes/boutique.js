@@ -93,6 +93,7 @@ router.get('/', async (req, res) => {
         const skip = pageSize * (currentPage - 1);
         const limit = pageSize;
         const boutiques = await Boutique.find(match).skip(skip).limit(limit).sort(obj);
+
         return res.status(200).json(boutiques)
     } catch (err) {
         return res.status(500).json(err)

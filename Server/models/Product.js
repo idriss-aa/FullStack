@@ -1,5 +1,38 @@
 const mongoose = require('mongoose');
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    AddProductInput:
+ *      type: object
+ *      required:
+ *        - userId
+ *        - StoreId
+ *        - title
+ *        - description 
+ *        - categories
+ *      properties:
+ *        userId:
+ *          type: string
+ *        StoreId:
+ *          type: string
+ *        title:
+ *          type: object
+ *          properties:
+ *            fr:
+ *              type: string
+ *            en:
+ *              type: string
+ * 
+ *        categories:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ */
 
 const ProductSchema = new mongoose.Schema({
     userId : { type: String, required: true },
