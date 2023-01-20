@@ -87,7 +87,18 @@ router.get('/', async (req, res) => {
 
          let sort = (req.query.sort == null) ? "createdAt" : req.query.sort;
          const obj = {}
-         obj[sort] = -1;
+
+        if(req.query.sort == title){
+            obj[sort] = 1;
+        }else{
+            obj[sort] = -1;
+        }
+
+
+        
+
+
+
         const currentPage = req.query.currentPage;
         const pageSize = req.query.pageSize;
         const skip = pageSize * (currentPage - 1);
