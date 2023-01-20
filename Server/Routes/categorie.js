@@ -100,12 +100,6 @@ router.put('/:id', verifyTokenAndisAdmin, async (req, res) => {
    *      - name: id
    *        description: The id of categorie
    *        required: true
-   *     requestBody:
-   *      required: true
-   *      content:
-   *        application/json:
-   *           schema:
-   *              $ref: '#/components/schemas/AddCategorieInput'
    *     responses:
    *       200:
    *         description: Categorie has been deleted...
@@ -160,6 +154,18 @@ router.get('/find/:id' , async (req, res) => {
     }
 })
 
+
+/**
+   * @openapi
+   * '/api/categorie/':
+   *  get:
+   *     tags:
+   *     - Categories
+   *     summary: Get all categories
+   *     responses:
+   *       200:
+   *         description: all categories
+   */
 //GET ALL CATEGORIES
 router.get('/' , async (req, res) => { 
     try {

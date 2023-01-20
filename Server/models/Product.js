@@ -28,10 +28,8 @@ const mongoose = require('mongoose');
  *        categories:
  *           type: array
  *           items:
- *             type: object
- *             properties:
- *               id:
- *                 type: string
+ *             type: string
+ *           
  */
 
 const ProductSchema = new mongoose.Schema({
