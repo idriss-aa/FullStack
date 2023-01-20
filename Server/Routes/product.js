@@ -88,7 +88,6 @@ router.get('/' , async (req, res) => {
 //GET ALL Products By Store
 router.get('/ByStore/:id' , async (req, res) => { 
     try {
-
         let match = {};
         match.StoreId = req.params.id;
 
