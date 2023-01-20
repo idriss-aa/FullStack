@@ -40,7 +40,8 @@ const BoutiqueSchema = new mongoose.Schema({
             periods: [{
                 start: { type: String },
                 end:   { type: String }
-            }]
+            }],
+            work:{ type: Boolean}
     }],
     CreationDate: {type: Date, default: () => Date.now() + 1*60*60*1000  },
 },

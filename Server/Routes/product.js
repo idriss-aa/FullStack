@@ -90,11 +90,14 @@ router.get('/ByStore/:id' , async (req, res) => {
         let match = {};
         match.StoreId = req.params.id;
 
-        if (req.query.categorie){
-            match.isOpen = req.query.categorie;
-        } 
+        // if (req.query.categorie){
+        //     let cat = req.query.categorie+".title";
+        //     match[categorie] = req.query.categorie;
+        // } 
 
-        const produits = await Product.find(match).populate('categories');    
+        //console.log(match)
+
+        const produits = await Product.find().populate('categories');    
         if(produits == null){
             return res.status(404).json('Data Not Found');  
         }
