@@ -198,11 +198,11 @@ router.get('/ByStore/:id' , async (req, res) => {
             match.categories = categorie._id
         } 
 
-        const produits = await Product.find(match).populate();    
+        const produits = await Product.find(match).populate('categories');    
         if(produits == null){
             return res.status(404).json('Data Not Found');  
         }
-        return res.status(200).json(produits).populate('categories');
+        return res.status(200).json(produits);
     } catch (err) {
         return res.status(500).json(err)
     }
