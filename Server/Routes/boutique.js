@@ -94,11 +94,6 @@ router.get('/', async (req, res) => {
             obj[sort] = -1;
         }
 
-
-        
-
-
-
         const currentPage = req.query.currentPage;
         const pageSize = req.query.pageSize;
         const skip = pageSize * (currentPage - 1);
