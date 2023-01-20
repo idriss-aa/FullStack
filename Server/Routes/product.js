@@ -1,6 +1,8 @@
 const Product = require('../models/Product');
 const Boutique = require('../models/Boutique');
-const { verifyTokenAndAdminOrManager, verifyTokenAndisAdmin} = require('./verifyToken')
+const categorie = require('../models/Categorie');
+const { verifyTokenAndAdminOrManager, verifyTokenAndisAdmin} = require('./verifyToken');
+const Categorie = require('../models/Categorie');
 const router = require("express").Router();
 
 
@@ -90,14 +92,12 @@ router.get('/ByStore/:id' , async (req, res) => {
         let match = {};
         match.StoreId = req.params.id;
 
-        // if (req.query.categorie){
-        //     let cat = req.query.categorie+".title";
-        //     match[categorie] = req.query.categorie;
-        // } 
+        if (req.query.categorie){   
+            const categorie = await Categorie.findOne({title : req.query.categorie});   
+            match.categories = categorie._id
+        } 
 
-        //console.log(match)
-
-        const produits = await Product.find().populate('categories');    
+        const produits = await Product.find(match).populate();    
         if(produits == null){
             return res.status(404).json('Data Not Found');  
         }
