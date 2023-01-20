@@ -4,6 +4,27 @@ const CryptoJS = require('crypto-js');
 const jwt = require('jsonwebtoken')
 const { verifyToken, verifyUserToken } = require('./verifyToken')
 
+
+ /**
+   * @openapi
+   * '/api/auth/register':
+   *  post:
+   *     tags:
+   *     - Authentification
+   *     summary: Register user
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/CreateUserInput'
+   *     responses:
+   *       200:
+   *         description: Success
+   *       401:
+   *         description : There is already a user with this name or email  
+   */
+
 //REGISTER
 router.post('/register', async (req, res) => {
 
@@ -29,6 +50,27 @@ router.post('/register', async (req, res) => {
         return res.status(500).json(err)
     }
 });
+
+
+/**
+   * @openapi
+   * '/api/auth/login':
+   *  post:
+   *     tags:
+   *     - Authentification
+   *     summary: Login user
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/LoginUserInput'
+   *     responses:
+   *       200:
+   *         description: Success
+   *       401:
+   *         description : There is already a user with this name or email  
+   */
 
 //LOGIN
 

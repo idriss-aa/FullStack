@@ -6,11 +6,11 @@ const ProductSchema = new mongoose.Schema({
     StoreId: { type: mongoose.Schema.Types.ObjectId, ref: 'Boutique' },
     title: {
         fr: { type: String, required: true  },
-        en: { type: String, required: true  }
+        en: { type: String  }
     },
     description: {
         fr: { type: String, required: true  },
-        en: { type: String, required: true  }
+        en: { type: String  }
     },
     categories : [{
         type: mongoose.Schema.Types.ObjectId,

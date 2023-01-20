@@ -13,6 +13,10 @@ const ProductRoute = require("./Routes/product");
 const BoutiqueRoute = require("./Routes/boutique");
 const session = require("express-session");
 const Keycloak = require("keycloak-connect");
+const {swaggerDocs} = require('./swagger.js');
+
+
+
 
 //connect to database
 connect();
@@ -64,4 +68,6 @@ app.use('/api/store', BoutiqueRoute)
 
 app.listen(process.env.PORT ,() =>{
     console.log(`Server is Running on ${process.env.PORT}`);
+    swaggerDocs(app,process.env.PORT)
+    console.log(`Docs available at http://localhost:${process.env.PORT}/docs`);
 })

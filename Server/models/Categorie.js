@@ -1,5 +1,23 @@
 const mongoose = require('mongoose');
 
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *    AddCategorieInput:
+ *      type: object
+ *      required:
+ *        - userId
+ *        - StoreId
+ *        - title
+ *      properties:
+ *        userId:
+ *          type: string
+ *        StoreId:
+ *          type: string
+ *        title:
+ *          type: string
+ */
 
 const CategorieSchema = new mongoose.Schema({
     userId: {

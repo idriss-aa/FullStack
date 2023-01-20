@@ -56,6 +56,23 @@ router.get('/find/:id' , verifyTokenAndisAdmin ,async (req, res) => {
 })
 
 
+ /**
+   * @openapi
+   * /api/users:
+   *  get:
+   *     tags:
+   *     - Users
+   *     summary: Get all Users
+   *     description: Get All users
+   *     responses:
+   *       200:
+   *         contents:
+   *            application/json
+   *         description: Get All users
+   *       403:
+   *         description : Not alowed to get users !
+   */
+
 //GET ALL USER
 router.get('/' ,verifyTokenAndisAdmin ,async (req, res) => { 
     try {
@@ -65,6 +82,26 @@ router.get('/' ,verifyTokenAndisAdmin ,async (req, res) => {
         return res.status(500).json(err)
     }
 })
+
+
+
+ /**
+   * @openapi
+   * '/api/users/admin/{id}':
+   *  get:
+   *     tags:
+   *     - Users
+   *     summary: make user admin
+   *     parameters:
+   *      - name: id
+   *        description: The id of user
+   *        required: true
+   *     responses:
+   *       200:
+   *         description: Success
+   *       403:
+   *         description : Not alowed to make user admin !
+   */
 
 //MAKE USER ADMIN
 router.put('/admin/:id' , verifyTokenAndisAdmin,async (req, res) => { 
@@ -81,6 +118,23 @@ router.put('/admin/:id' , verifyTokenAndisAdmin,async (req, res) => {
     }
 })
 
+ /**
+   * @openapi
+   * '/api/users/remove/{id}':
+   *  get:
+   *     tags:
+   *     - Users
+   *     summary: remove user admin
+   *     parameters:
+   *      - name: id
+   *        description: The id of user
+   *        required: true
+   *     responses:
+   *       200:
+   *         description: Success
+   *       403:
+   *         description : Not alowed to remove user admin !
+   */
 
 //REMOVE USER ADMIN
 router.put('/admin/remove/:id',verifyTokenAndisAdmin ,async (req, res) => { 
@@ -96,6 +150,8 @@ router.put('/admin/remove/:id',verifyTokenAndisAdmin ,async (req, res) => {
         return res.status(500).json(error)
     }
 })
+
+
 
 //MAKE USER MANAGER
 router.put('/manager/:id',verifyTokenAndisAdmin ,async (req, res) => { 

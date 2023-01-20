@@ -3,6 +3,27 @@ const Boutique = require('../models/Boutique');
 const { verifyTokenAndisAdmin} = require('./verifyToken')
 const router = require("express").Router();
 
+/**
+   * @openapi
+   * '/api/categorie/add':
+   *  post:
+   *     tags:
+   *     - Categories
+   *     summary: Add a Categorie
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/AddCategorieInput'
+   *     responses:
+   *       200:
+   *         description: Success
+   *       404:
+   *         description : Store Not Found
+   *       403:
+   *         description : You are not alowed to do That !  
+   */
 
 //CREATE
 router.post('/add', verifyTokenAndisAdmin, async (req, res) => {
@@ -26,6 +47,31 @@ router.post('/add', verifyTokenAndisAdmin, async (req, res) => {
 })
 
 
+/**
+   * @openapi
+   * '/api/categorie/{id}':
+   *  put:
+   *     tags:
+   *     - Categories
+   *     summary: Update a category
+   *     parameters:
+   *      - name: id
+   *        description: The id of categorie
+   *        required: true
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/AddCategorieInput'
+   *     responses:
+   *       200:
+   *         description: Success
+   *       403:
+   *         description : You are not alowed to do That !  
+   *       404:
+   *         description : Store Not Found  
+   */
 
 //UPDATE 
 router.put('/:id', verifyTokenAndisAdmin, async (req, res) => {
@@ -43,6 +89,32 @@ router.put('/:id', verifyTokenAndisAdmin, async (req, res) => {
     }
 });
 
+/**
+   * @openapi
+   * '/api/categorie/{id}':
+   *  delete:
+   *     tags:
+   *     - Categories
+   *     summary: Delete a category
+   *     parameters:
+   *      - name: id
+   *        description: The id of categorie
+   *        required: true
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/AddCategorieInput'
+   *     responses:
+   *       200:
+   *         description: Categorie has been deleted...
+   *       403:
+   *         description : You are not alowed to do That !  
+   *       404:
+   *         description : Store Not Found  
+   */
+
 
 //DELETE
 router.delete('/:id', verifyTokenAndisAdmin, async (req, res) => { 
@@ -53,6 +125,27 @@ router.delete('/:id', verifyTokenAndisAdmin, async (req, res) => {
         return res.status(500).json(err)
     }
 })
+
+ /**
+   * @openapi
+   * api/categorie/find/{id}:
+   *  get:
+   *     tags:
+   *     - Categories
+   *     summary: Get Categorie by id
+   *     description: Get Categorie by id
+   *     parameters:
+   *       - name: id
+   *         description: The id of categorie
+   *         required: true
+   *     responses:
+   *       200:
+   *         contents:
+   *            application/json
+   *         description: Get All users
+   *       403:
+   *         description : Categorie Not Found
+   */
 
 //GET CATEGORIE
 router.get('/find/:id' , async (req, res) => { 
