@@ -168,13 +168,17 @@ router.get('/find/:id' , async (req, res) => {
 
 
 
-
-
-
-
-
-
-
+/**
+   * @openapi
+   * '/api/product/':
+   *  get:
+   *     tags:
+   *     - Categories
+   *     summary: Get all producsts
+   *     responses:
+   *       200:
+   *         description: all products
+   */
 
 
 //GET ALL Products
@@ -186,6 +190,7 @@ router.get('/' , async (req, res) => {
         return res.status(500).json(err)
     }
 })
+
 
 //GET ALL Products By Store
 router.get('/ByStore/:id' , async (req, res) => { 

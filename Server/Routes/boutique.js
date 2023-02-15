@@ -4,7 +4,25 @@ const router = require("express").Router();
 const mongoose = require('mongoose');
 const moment = require('moment');
 
-
+/**
+   * @openapi
+   * '/api/store/add':
+   *  post:
+   *     tags:
+   *     - Store
+   *     summary: Add a Store
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/AddStoreInput'
+   *     responses:
+   *       200:
+   *         description: Success
+   *       403:
+   *         description : You are not alowed to do That !  
+   */
 
 //CREATE SHOP
 router.post('/add', verifyTokenAndAdminOrManager, async (req, res) => {
@@ -22,6 +40,32 @@ router.post('/add', verifyTokenAndAdminOrManager, async (req, res) => {
     }
 });
 
+/**
+   * @openapi
+   * '/api/store/edit/{id}':
+   *  put:
+   *     tags:
+   *     - Store
+   *     summary: Update a Store
+   *     parameters:
+   *      - name: id
+   *        description: The id of Store
+   *        required: true
+   *     requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *           schema:
+   *              $ref: '#/components/schemas/AddStoreInput'
+   *     responses:
+   *       200:
+   *         description: Success
+   *       403:
+   *         description : You are not alowed to do That !  
+   *       404:
+   *         description : Store Not Found  
+   */
+
 //UPDATE SHOP
 router.put('/edit/:id', verifyTokenAndAdminOrManager, async (req, res) => {
 
@@ -38,6 +82,26 @@ router.put('/edit/:id', verifyTokenAndAdminOrManager, async (req, res) => {
     }
 });
 
+/**
+   * @openapi
+   * '/api/store/{id}':
+   *  delete:
+   *     tags:
+   *     - Store
+   *     summary: Delete a store
+   *     parameters:
+   *      - name: id
+   *        description: The id of Store
+   *        required: true
+   *     responses:
+   *       200:
+   *         description: Store has been deleted...
+   *       403:
+   *         description : You are not alowed to do That !  
+   *       404:
+   *         description : Store Not Found  
+   */
+
 
 //DELETE SHOP
 router.delete('/:id', verifyTokenAndAdminOrManager, async (req, res) => { 
@@ -48,6 +112,27 @@ router.delete('/:id', verifyTokenAndAdminOrManager, async (req, res) => {
         return res.status(500).json(err)
     }
 });
+
+ /**
+   * @openapi
+   * api/store/find/{id}:
+   *  get:
+   *     tags:
+   *     - Store
+   *     summary: Get store by id
+   *     description: Get store by id
+   *     parameters:
+   *       - name: id
+   *         description: The id of store
+   *         required: true
+   *     responses:
+   *       200:
+   *         contents:
+   *            application/json
+   *         description: Get store by id
+   *       403:
+   *         description : store Not Found
+   */
 
 //GET SHOP by ID
 router.get('/find/:id', async (req, res) => { 
@@ -61,6 +146,18 @@ router.get('/find/:id', async (req, res) => {
         return res.status(500).json(err)
     }
 });
+
+/**
+   * @openapi
+   * '/api/product/':
+   *  get:
+   *     tags:
+   *     - Store
+   *     summary: Get all Store
+   *     responses:
+   *       200:
+   *         description: all Store
+   */
 
 //GET ALL SHOPS
 router.get('/', async (req, res) => { 
@@ -89,12 +186,7 @@ router.get('/', async (req, res) => {
          const obj = {}
          obj[sort] = 1;
 
-
-        const currentPage = req.query.currentPage;
-        const pageSize = req.query.pageSize;
-        const skip = pageSize * (currentPage - 1);
-        const limit = pageSize;
-        const boutiques = await Boutique.find(match).skip(skip).limit(limit).sort(obj);
+        const boutiques = await Boutique.find(match).sort(obj);
 
         return res.status(200).json(boutiques)
     } catch (err) {
