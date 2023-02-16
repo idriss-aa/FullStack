@@ -182,9 +182,6 @@ router.get('/ByStore/:id', async (req, res) => {
     try {
         const categories = await Categorie.find({StoreId : req.params.id});
 
-        if(categories.length === 0){
-            return res.status(404).json('Data Not Found');  
-        }
         return res.status(200).json(categories)
     } catch (err) {
         return res.status(500).json(err)

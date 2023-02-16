@@ -87,7 +87,7 @@ router.put('/:id', verifyTokenAndAdminOrManager, async (req, res) => {
         { new: true }
      ).populate('categories');
      return res.status(200).json(updatedProduct);
-    } catch (error) {
+    } catch (err) {
         return res.status(500).json(err)
     }
 });
