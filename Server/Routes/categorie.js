@@ -180,8 +180,17 @@ router.get('/' , async (req, res) => {
 //GET ALL CATEGORIES By Store
 router.get('/ByStore/:id', async (req, res) => { 
     try {
-        const categories = await Categorie.find({StoreId : req.params.id});
+        let match = {};
+        match.StoreId = req.params.id;
 
+         if (req.query.categorie){   
+            const categorie = await Categorie.findOne({title : req.query.categorie}); 
+            if(categorie == null){
+                return res.status(404).json('Data Not Found');  
+            }
+            return res.status(200).json(categorie)
+        } 
+        const categories = await Categorie.find(match);
         return res.status(200).json(categories)
     } catch (err) {
         return res.status(500).json(err)

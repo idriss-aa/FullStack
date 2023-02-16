@@ -42,8 +42,6 @@ app.use(cors({
 }))
 
 
-
-app.use(logger("dev"));
 app.use(function(req, res, next) {
        
             res.header("Access-Control-Allow-Origin", "*");
@@ -66,7 +64,7 @@ app.use('/api/product', ProductRoute)
 app.use('/api/store', BoutiqueRoute)
 
 
-app.listen(process.env.PORT ,() =>{
+app.listen(process.env.PORT,() =>{
     console.log(`Server is Running on ${process.env.PORT}`);
     swaggerDocs(app,process.env.PORT)
     console.log(`Docs available at http://localhost:${process.env.PORT}/docs`);

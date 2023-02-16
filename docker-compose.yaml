@@ -8,24 +8,11 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./nginx
-    ports:
-      - "4200:80"
-
-  keycloak:
-    image: jboss/keycloak:15.0.0
-    environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
-      - DB_VENDOR=h2
-    ports:
-      - "8081:8080"
 
   api:
     build:
       dockerfile: Dockerfile.dev
       context: "./Server"
-    ports:
-      - "8090:8090"
     volumes:
       - /app/node_modules
       - ./Server:/app
@@ -35,7 +22,10 @@ services:
       - domain=localhost
       - PASS_SEC=KhassekTkouneAntonix
       - JWT_SEC=KhassekTkouneAntonix
-      
+    ports:
+      - "8080:5000"
+
+
   client:
     stdin_open: true
     environment:
@@ -46,4 +36,5 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
-
+    ports:
+      - "4200:3000"
