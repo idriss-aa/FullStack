@@ -30,7 +30,6 @@ const jwt = require('jsonwebtoken')
 router.post('/add', verifyTokenAndisAdmin, async (req, res) => {
      
     try {
-        
         const store = await Boutique.findOneAndUpdate( 
             { _id: req.body.StoreId }, 
             { $inc : {'Nb_Categories' : 1}},

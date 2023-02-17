@@ -140,7 +140,7 @@ router.get('/find/:id', async (req, res) => {
     try {
         const boutique = await Boutique.findById(req.params.id)
         if(boutique == null){
-            return res.status(403).json('Erreur : Catégorie non trouvée')
+            return res.status(403).json('Erreur : boutique non trouvée')
         }
         return res.status(200).json(boutique)
     } catch (err) {
@@ -175,7 +175,6 @@ router.get('/', async (req, res) => {
             }
         } 
        
-
         let match = {};
         if (req.query.isOpen){
             match.isOpen = req.query.isOpen ;
@@ -203,8 +202,6 @@ router.get('/', async (req, res) => {
          if(decoded && decoded.isVendorDeliveryMan){
             match = {...match, CreatedBy: decoded.id }
          }
-         
-         console.log(match)
 
         const boutiques = await Boutique.find(match).sort(obj);
         return res.status(200).json(boutiques)
