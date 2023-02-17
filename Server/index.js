@@ -15,27 +15,8 @@ const session = require("express-session");
 const Keycloak = require("keycloak-connect");
 const {swaggerDocs} = require('./swagger.js');
 
-
-
-
 //connect to database
 connect();
-
-/*
-const memoryStore = new session.MemoryStore();
-app.use(
-    session({
-      secret: "secretKey",
-      resave: false,
-      saveUninitialized: true,
-      store: memoryStore,
-    })
-  );
-
-const keycloak = new Keycloak({
-    store: memoryStore,
-});
-*/
 
 app.use(cors({
 	origin:'*'

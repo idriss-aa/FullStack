@@ -3,6 +3,7 @@ const { verifyTokenAndAdminOrManager, verifyTokenAndisAdmin} = require('./verify
 const router = require("express").Router();
 const mongoose = require('mongoose');
 const moment = require('moment');
+const jwt = require('jsonwebtoken')
 
 /**
    * @openapi
@@ -163,6 +164,18 @@ router.get('/find/:id', async (req, res) => {
 router.get('/', async (req, res) => { 
    
     try { 
+
+        let decoded ;
+        if (req.headers && req.headers.authorization) {
+            var authorization = req.headers.authorization.split(' ')[1];
+            try {
+                decoded = jwt.verify(authorization, process.env.JWT_SEC);
+            } catch (e) {
+                console.log(e)
+            }
+        } 
+       
+
         let match = {};
         if (req.query.isOpen){
             match.isOpen = req.query.isOpen ;
@@ -186,8 +199,14 @@ router.get('/', async (req, res) => {
          const obj = {}
          obj[sort] = 1;
 
-        const boutiques = await Boutique.find(match).sort(obj);
+     
+         if(decoded && decoded.isVendorDeliveryMan){
+            match = {...match, CreatedBy: decoded.id }
+         }
+         
+         console.log(match)
 
+        const boutiques = await Boutique.find(match).sort(obj);
         return res.status(200).json(boutiques)
     } catch (err) {
         return res.status(500).json(err)

@@ -11,15 +11,11 @@ const verifyUserToken = (req, res, next) => {
                 req.user = user;
                 next();
             } 
-        })
-        
+        }) 
     }else{
         return res.status(401).json('You are not authentified !')
     }
 }
-
-
-
 
 
 const verifyToken = (req, res, next) => {

@@ -2,6 +2,7 @@ const Categorie = require('../models/Categorie');
 const Boutique = require('../models/Boutique');
 const { verifyTokenAndisAdmin} = require('./verifyToken')
 const router = require("express").Router();
+const jwt = require('jsonwebtoken')
 
 /**
    * @openapi
@@ -27,7 +28,7 @@ const router = require("express").Router();
 
 //CREATE
 router.post('/add', verifyTokenAndisAdmin, async (req, res) => {
-    
+     
     try {
         
         const store = await Boutique.findOneAndUpdate( 
@@ -178,11 +179,11 @@ router.get('/' , async (req, res) => {
 
 
 //GET ALL CATEGORIES By Store
-router.get('/ByStore/:id', async (req, res) => { 
+router.get('/ByStore/:id' , async (req, res) => { 
     try {
         let match = {};
-        match.StoreId = req.params.id;
-
+        match.StoreId = req.params.id ;
+      
          if (req.query.categorie){   
             const categorie = await Categorie.find({title : {$regex : req.query.categorie}}); 
             if(categorie == null){

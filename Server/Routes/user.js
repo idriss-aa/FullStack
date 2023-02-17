@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Boutique = require('../models/Boutique')
 const {verifyTokenAndisAdmin, verifyToken, verifyTokenAndisAdminOrSameUser} = require('./verifyToken')
 const router = require("express").Router();
 
@@ -157,8 +158,10 @@ router.put('/admin/remove/:id',verifyTokenAndisAdmin ,async (req, res) => {
 router.put('/manager/:id',verifyTokenAndisAdmin ,async (req, res) => { 
     try {
 
+     
+     await Boutique.updateOne({_id: req.params.StoreId},{$set:{CreatedBy: req.params.id}})
      const updatedUserAdmin = await User.update({_id: req.params.id},{$set:{isVendorDeliveryMan: true}})
-
+     
      if(updatedUserAdmin == null){
         return res.status(403).json('Erreur : Utilisateur non trouvée')
     }
