@@ -1,24 +1,21 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router} from 'react-router-dom';
+import Boutiques from './Boutiques/Boutiques';
 import './App.css';
+import Produits from './Produits/Produits';
+import Categories from './Categories/Categories';
+import Login from './Auth/Login';
+import  RouteLinks from './Routes/RouteLinks';
+import PrivateRoute from './Routes/PrivateRoutes.js';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <RouteLinks path='/' exact component={Login} /> 
+      <PrivateRoute path='/boutiques' exact component={Boutiques}/>
+      <PrivateRoute path='/produits/:id' exact component={Produits}/>
+      <PrivateRoute path='/categories/:id' exact component={Categories}/>
+    </Router> 
   );
 }
 

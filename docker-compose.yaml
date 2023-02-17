@@ -8,7 +8,6 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./nginx
-
   api:
     build:
       dockerfile: Dockerfile.dev
@@ -24,8 +23,6 @@ services:
       - JWT_SEC=KhassekTkouneAntonix
     ports:
       - "8080:5000"
-
-
   client:
     stdin_open: true
     environment:

@@ -1,0 +1,54 @@
+
+
+
+.filter {
+    width: 320px;
+    height: 599px;
+    background: #FFFBF7;
+}
+
+.appName {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 100%;
+
+    color: #202223;
+}
+
+.RadioButton input[type="radio"] {
+    accent-color: #597A33;
+}
+
+.title1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+
+    color: #202223;
+}
+
+.title2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    
+    color: #565C60;
+}
+
+.date {
+    width: 157px;
+    height: 32px;
+    background: #EDE6E2;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}

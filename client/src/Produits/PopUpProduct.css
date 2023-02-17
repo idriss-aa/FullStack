@@ -1,0 +1,104 @@
+
+
+.showProduct {
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 605px;
+    height: 570px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: #FFFBF7;
+    box-shadow: 0px 4px 5px -2px rgba(0, 0, 0, 0.12);
+    
+    animation: opac 0.2s linear forwards;
+}
+
+.widthBox {
+    width: 415px;
+}
+
+.inputProductName {
+    width: 199px;
+    height: 32px;
+    background: #EDE6E2;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.inputProductCategorie {
+    width: 199px;
+    height: 32px;
+    background: #EDE6E2;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.optionContainer li:hover,
+.optionContainer .highlight {
+  background: #EDE6E2;
+  color: #fff;
+}
+
+.searchBox::placeholder {
+    color: black;
+  }
+
+.chips {
+	background: red;
+}
+
+.inputProductDesc {
+    width: 415px;
+    height: 70px;
+    background: #EDE6E2;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.titleInput {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 100%;
+
+    color: #48230F;
+}
+
+.grayButton {
+    width: 154px;
+    height: 42px;
+    background: #909090;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    color: #FFFFFF;
+}
+
+@keyframes opac {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

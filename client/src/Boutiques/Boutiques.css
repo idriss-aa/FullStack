@@ -1,0 +1,59 @@
+
+
+
+.title {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 100%;
+
+    color: #202223;
+}
+
+.greenButton {
+    width: 154px;
+    height: 42px;
+    background: #597A33;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    color: #FFFFFF;
+}
+
+.trie {
+    width: 167px;
+    height: 32px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0.4px;
+    
+    color: #000000;
+    background: #ECECF0;
+    border: 0.5px solid #676767;
+    border-radius: 5px;
+}
+
+.trie select {
+    background: #ECECF0;
+    border:0px;
+    outline: none;
+    width: 160px;
+}
+
+.trie label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+
+    color: #676767;
+    font-size:10px;
+    /* padding: 2px 8px 0; */
+}

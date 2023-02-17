@@ -1,27 +1,35 @@
 {
-  "name": "fullstack",
+  "name": "react-tailwind-starter",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "@reduxjs/toolkit": "^1.9.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "axios": "^1.2.2",
+    "moment": "^2.29.4",
+    "multiselect-react-dropdown": "^2.0.25",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-hot-toast": "^2.4.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.3",
+    "redux-actions": "^2.6.5",
+    "tailwindcss": "^1.4.6"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "purge:css": "cross-env NODE_ENV=production postcss src/tailwind.css -o src/index.css",
+    "build:css": "postcss src/tailwind.css -o src/index.css",
+    "watch:css": "postcss src/tailwind.css -o src/index.css -w",
+    "start": "npm run --silent build:css && react-scripts start --silent",
+    "build": "npm run purge:css && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -34,5 +42,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.8.0",
+    "cross-env": "^7.0.2",
+    "cssnano": "^4.1.10",
+    "postcss-cli": "^7.1.1"
   }
 }
